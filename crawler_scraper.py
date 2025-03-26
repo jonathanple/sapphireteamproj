@@ -4,7 +4,11 @@ from urllib.parse import urljoin, urlparse
 
 # Config
 BASE_URL = "https://www.valleywater.org"
-START_PAGE = "https://www.valleywater.org/careers-job-openings"
+START_PAGES = [
+    "https://www.valleywater.org/careers-job-openings",
+    "https://www.valleywater.org/valley-water-retirees-information",
+    "https://www.valleywater.org/bargaining-units-mous"
+]
 ALLOWED_DOMAIN = "valleywater.org"
 
 visited = set()
