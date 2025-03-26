@@ -40,15 +40,14 @@ def crawl(url, depth=1):
 
 # Start crawling
 if __name__ == "__main__":
-    crawl(START_PAGE, depth=2)  # Set depth=2 to explore links within the main page
-    # Save the content to a file
-output_path = "insert output path here"
+    for start_url in START_PAGES:
+        crawl(start_url, depth=2)
 
-with open(output_path, "w", encoding="utf-8") as f:
-    for url, content in scraped_pages.items():
-        f.write(f"URL: {url}\n{content}\n\n{'='*80}\n\n")
+    # Save the content to a file
+    output_path = "insert_desired_output_path"
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        for url, content in scraped_pages.items():
+            f.write(f"URL: {url}\n{content}\n\n{'='*80}\n\n")
 
     print(f"Scraped {len(scraped_pages)} pages.")
-
-
-    
