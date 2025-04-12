@@ -7,7 +7,7 @@ import os
 # Load PDF content
 @st.cache_data
 def load_benefits_summary():
-    return extract_pdf_text("Benefits_Summary.pdf")
+    return extract_pdf_text("C:/Users/jonat/Downloads/Benefits_Summary.pdf")
 
 # Initialize OpenAI
 client = OpenAI(api_key='OPENAI_API_KEY')  # Replace with your actual key
