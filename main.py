@@ -65,22 +65,6 @@ if st.button("Submit Question") and question and employee_id and employee_name:
         st.success("Answer:")
         st.write(response)
 
-        st.info("📌 Conversation Summary:")
-        st.write(summary)
+        
 
-# --- Analysis Section ---
-st.header("📊 Analyze Conversations (HR Only)")
-analysis_prompt = st.text_area("Enter a request to analyze past conversations (e.g., 'What are the most common benefit concerns?')")
 
-if st.button("Analyze"):
-    summaries = get_all_summaries()
-    if not summaries:
-        st.warning("No conversation summaries found yet.")
-    else:
-        all_summaries_text = "\n".join([f"- {row[5]}" for row in summaries])  # summary is column index 5
-        prompt = f"""You are an HR data analyst. Analyze the following conversation summaries:\n\n{all_summaries_text}\n\nThe HR team has asked:\n{analysis_prompt}"""
-
-        with st.spinner("Analyzing conversations..."):
-            analysis_result = get_completion(prompt)
-            st.subheader("🧠 Analysis Result")
-            st.write(analysis_result)
