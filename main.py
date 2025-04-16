@@ -21,16 +21,17 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     )
     return completion.choices[0].message.content.strip()
 
-# Function to summarize the conversation
+# Function to summarize the conversation for database storage only
 def summarize_conversation(question, answer):
-    prompt = f"""Summarize the following conversation between an employee and the HR assistant in 2-3 sentences:\n
-    Employee: {question}\n
+    prompt = f"""Summarize the following conversation between an employee and the HR assistant in a cohesive paragraph that includes the main points, the employee's question, and the assistant's answer:
+
+    Employee: {question}
     Assistant: {answer}
     """
     summary = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant that writes short summaries of conversations."},
+            {"role": "system", "content": "You are a helpful assistant that writes a concise summary of conversations, highlighting the question, answer, and main points."},
             {"role": "user", "content": prompt}
         ]
     )
@@ -70,14 +71,12 @@ if st.button("Submit Question") and question:
         prompt = f"""Here is the HR information:\n\n{all_text}\n\nNow answer this question:\n{question}"""
         response = get_completion(prompt)
 
-        # Summarize & save to SQLite
+        # Summarize the conversation for saving to the database (but not displaying to the user)
         summary = summarize_conversation(question, response)
+
+        # Save the conversation summary to SQLite
         save_to_sqlite(None, None, question, response, summary)
 
-        # Display the result to the user
+        # Display the result to the user (without the summary)
         st.success("Answer:")
         st.write(response)
-
-        # Optionally, show a summary of the conversation (if needed)
-        st.info("📌 Conversation Summary:")
-        st.write(summary)
